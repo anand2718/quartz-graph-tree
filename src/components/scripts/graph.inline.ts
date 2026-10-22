@@ -411,7 +411,7 @@ import {
         gfx.circle(0, 0, radius);
         gfx.fill({ color: isTagNode ? light : color });
         if (isTagNode) {
-          gfx.stroke({ width: 2, color: tertiary });
+          gfx.stroke({ width: 5, color: tertiary });
         }
 
         gfx.eventMode = "static";
