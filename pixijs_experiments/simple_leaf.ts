@@ -1,4 +1,4 @@
-import { Application, Graphics } from 'pixi.js';
+import { Application, Graphics,  GraphicsContext} from 'pixi.js';
 
 (async () => {
     // Create a new application
@@ -8,14 +8,9 @@ import { Application, Graphics } from 'pixi.js';
     await app.init({ antialias: true, resizeTo: window });
 
     // Append the application canvas to the document body
-    document.body.appendChild(app.canvas);
+    document.body.appendChild(app.canvas);    
 
-    // Initialize graphics
-    const graphics = new Graphics();
-
-    // Bezier leaf
-    graphics
-        .moveTo(50, 50)
+    const leafContext = new GraphicsContext().moveTo(50, 50)
         .bezierCurveTo(
             100, 0,
             150, 50,
@@ -33,5 +28,10 @@ import { Application, Graphics } from 'pixi.js';
         .lineTo(125, 50)
         .stroke({ width: 1, color: 0x51A687 });
 
-    app.stage.addChild(graphics);
+    const gfx = new Graphics(leafContext);
+
+    app.stage.addChild(gfx);
+
+    // Remember that context is properly destroyed when 
+    // actually used! 
 })();
