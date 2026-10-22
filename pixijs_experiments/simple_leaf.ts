@@ -10,7 +10,7 @@ import { Application, Graphics,  GraphicsContext} from 'pixi.js';
     // Append the application canvas to the document body
     document.body.appendChild(app.canvas);    
 
-    const leafContext = new PIXI.GraphicsContext()
+    const leafContext = new GraphicsContext()
         .bezierCurveTo(
             50, -50,
             100, 0,
