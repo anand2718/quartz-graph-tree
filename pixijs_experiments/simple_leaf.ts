@@ -10,22 +10,22 @@ import { Application, Graphics,  GraphicsContext} from 'pixi.js';
     // Append the application canvas to the document body
     document.body.appendChild(app.canvas);    
 
-    const leafContext = new GraphicsContext().moveTo(50, 50)
+    const leafContext = new PIXI.GraphicsContext()
         .bezierCurveTo(
+            50, -50,
             100, 0,
-            150, 50,
-            175, 50
+            125, 0
         )
-        .moveTo(50, 50)
+        .moveTo(0, 0)
         .bezierCurveTo(
-            100, 100,
-            150, 50,
-            175, 50,
+            50, 50,
+            100, 0,
+            125, 0,
             0.0
         )
         .stroke({ width: 2, color: 0x51A687 })
-        .moveTo(75, 50)
-        .lineTo(125, 50)
+        .moveTo(25, 0)
+        .lineTo(75, 0)
         .stroke({ width: 1, color: 0x51A687 });
 
     const gfx = new Graphics(leafContext);
