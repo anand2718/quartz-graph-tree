@@ -55,6 +55,26 @@ import {
     var d3 = window.d3;
     var PIXI = window.PIXI;
 
+    // Create leaf template
+    /// TODO: offset of 50,50 likely needs to be changed
+    const leafContext = new PIXI.GraphicsContext().moveTo(50, 50)
+        .bezierCurveTo(
+            100, 0,
+            150, 50,
+            175, 50
+        )
+        .moveTo(50, 50)
+        .bezierCurveTo(
+            100, 100,
+            150, 50,
+            175, 50,
+            0.0
+        )
+        .stroke({ width: 2, color: 0x51A687 })
+        .moveTo(75, 50)
+        .lineTo(125, 50)
+        .stroke({ width: 1, color: 0x51A687 });
+
     if (!d3 || !PIXI) {
       console.error("[Graph] Libraries not loaded");
       return;
@@ -409,8 +429,8 @@ import {
         label.scale.set(1 / scale);
         labelsContainer.addChild(label);
 
-        var gfx = new PIXI.Graphics();
-        gfx.circle(0, 0, radius);
+        var gfx = new PIXI.Graphics(leafContext);
+        // gfx.circle(0, 0, radius);
         // TEST:
         // gfx.fill({ color: isTagNode ? light : color });
         gfx.fill({ color: darkgreen });
@@ -621,6 +641,8 @@ import {
         stopAnimation = true;
         simulation.stop();
         try {
+          // Destroy leaf template
+          leafContext.destroy({ context: true });
           app.destroy(true);
         } catch (_) {
           // PixiJS may throw if WebGL context was already lost.
