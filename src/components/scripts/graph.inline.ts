@@ -226,6 +226,8 @@ import {
       var dark = resolveColor(styles.getPropertyValue("--dark").trim(), "#1a1a1a");
       var light = resolveColor(styles.getPropertyValue("--light").trim(), "#f5f5f5");
       var bodyFont = styles.getPropertyValue("--bodyFont").trim() || "inherit";
+      // TEST: 
+      var darkgreen = resolveColor(styles.getPropertyValue("--darkgreen").trim(), "#06402B");
 
       var app = new PIXI.Application();
       await app.init({
@@ -409,9 +411,11 @@ import {
 
         var gfx = new PIXI.Graphics();
         gfx.circle(0, 0, radius);
-        gfx.fill({ color: isTagNode ? light : color });
+        // TEST:
+        // gfx.fill({ color: isTagNode ? light : color });
+        gfx.fill({ color: darkgreen });
         if (isTagNode) {
-          gfx.stroke({ width: 5, color: tertiary });
+          gfx.stroke({ width: 2, color: tertiary });
         }
 
         gfx.eventMode = "static";
