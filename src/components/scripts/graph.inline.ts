@@ -435,6 +435,7 @@ import {
         label.anchor.set(0.5, 1.2);
         label.alpha = 0;
         label.scale.set(1 / scale);
+        label.eventMode = 'none';
         labelsContainer.addChild(label);
 
         var gfx = new PIXI.Graphics(leafContext);
@@ -463,7 +464,7 @@ import {
             }
           });
 
-          g.on("pointerleave", function () {
+          g.on("pointerout", function () {
             updateHoverInfo(null);
             labelRef.alpha = oldLabelOpacity;
             if (!dragging) {
