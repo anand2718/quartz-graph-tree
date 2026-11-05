@@ -56,24 +56,32 @@ import {
     var PIXI = window.PIXI;
 
     // Create leaf template
-    /// TODO: offset of 50,50 likely needs to be changed
     const leafContext = new PIXI.GraphicsContext()
-        .bezierCurveTo(
-            50, -50,
-            100, 0,
-            125, 0
-        )
-        .moveTo(0, 0)
-        .bezierCurveTo(
-            50, 50,
-            100, 0,
-            125, 0,
-            0.0
-        )
-        .stroke({ width: 2, color: 0x51A687 })
+        .scale(.5)
+        .bezierCurveTo(50, -50, 100, 0, 125, 0)
+        .bezierCurveTo(100, 0, 50, 50, 0, 0)
+        .fill({ color: 0x51A687, alpha: 0.5 })
+        .stroke({ width: 3, color: 0x51A687, cap: "round", join: "round" })
         .moveTo(25, 0)
         .lineTo(75, 0)
-        .stroke({ width: 1, color: 0x51A687 });
+        .stroke({ width: 2, color: 0x51A687, cap: "round" });
+
+    const leafHitArea = new PIXI.Polygon([
+      0, 0,
+      11, -8,
+      19, -10.5,
+      26, -11,
+      36, -9.5,
+      45, -6,
+      54, -2.5,
+      62.5, 0,
+      54, 2.5,
+      45, 6,
+      36, 9.5,
+      26, 11,
+      19, 10.5,
+      11, 8,
+    ]);
 
     if (!d3 || !PIXI) {
       console.error("[Graph] Libraries not loaded");
@@ -257,7 +265,7 @@ import {
         backgroundAlpha: 0,
         resolution: window.devicePixelRatio || 1,
         autoDensity: true,
-        eventMode: "static",
+        eventMode: "dynamic",
       });
 
       graph.appendChild(app.canvas);
@@ -281,7 +289,7 @@ import {
                   numLinks++;
                 }
               }
-              return 2 + Math.sqrt(numLinks);
+              return 30 + Math.sqrt(numLinks); // TODO:redundant w/ nodeRadius()? 
             })
             .iterations(3),
         );
@@ -313,7 +321,7 @@ import {
             numLinks++;
           }
         }
-        return 2 + Math.sqrt(numLinks);
+        return 30 + Math.sqrt(numLinks);
       }
 
       function nodeColor(d) {
@@ -372,7 +380,7 @@ import {
             alpha = linkData.active ? 1 : 0.2;
           }
           linkData.alpha = alpha;
-          linkData.color = linkData.active ? gray : lightgray;
+          linkData.color = linkData.active ? darkgreen : gray;
         }
       }
 
@@ -430,13 +438,16 @@ import {
         labelsContainer.addChild(label);
 
         var gfx = new PIXI.Graphics(leafContext);
+        gfx.rotation = Math.random() * Math.PI * 2;
+        gfx.hitArea = leafHitArea;
+
         // gfx.circle(0, 0, radius);
         // TEST:
         // gfx.fill({ color: isTagNode ? light : color });
-        gfx.fill({ color: darkgreen });
-        if (isTagNode) {
-          gfx.stroke({ width: 2, color: tertiary });
-        }
+        // gfx.fill({ color: darkgreen });
+        // if (isTagNode) {
+        //   gfx.stroke({ width: 2, color: tertiary });
+        // }
 
         gfx.eventMode = "static";
         gfx.cursor = "pointer";
@@ -475,7 +486,7 @@ import {
 
       for (var i = 0; i < graphLinks.length; i++) {
         var link = graphLinks[i];
-        var gfx = new PIXI.Graphics(leafContext);
+        var gfx = new PIXI.Graphics();
         gfx.eventMode = "none";
         linkContainer.addChild(gfx);
 
