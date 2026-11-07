@@ -55,8 +55,13 @@ import {
     var d3 = window.d3;
     var PIXI = window.PIXI;
 
+    if (!d3 || !PIXI) {
+      console.error("[Graph] Libraries not loaded");
+      return;
+    }
+
     // Create leaf template
-    const leafContext = new PIXI.GraphicsContext()
+    var leafContext = new PIXI.GraphicsContext()
         .scale(.5)
         .bezierCurveTo(50, -50, 100, 0, 125, 0)
         .bezierCurveTo(100, 0, 50, 50, 0, 0)
@@ -66,7 +71,7 @@ import {
         .lineTo(75, 0)
         .stroke({ width: 2, color: 0x51A687, cap: "round" });
 
-    const leafHitArea = new PIXI.Polygon([
+    var leafHitArea = new PIXI.Polygon([
       0, 0,
       11, -8,
       19, -10.5,
@@ -82,11 +87,6 @@ import {
       19, 10.5,
       11, 8,
     ]);
-
-    if (!d3 || !PIXI) {
-      console.error("[Graph] Libraries not loaded");
-      return;
-    }
 
     var localStorageKey = "graph-visited";
 
@@ -653,8 +653,6 @@ import {
         stopAnimation = true;
         simulation.stop();
         try {
-          // Destroy leaf template
-          leafContext.destroy({ context: true });
           app.destroy(true);
         } catch (_) {
           // PixiJS may throw if WebGL context was already lost.
