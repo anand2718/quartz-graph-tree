@@ -513,7 +513,7 @@ import {
           updateHoverInfo(null);
           renderPixiFromD3();
 
-          if (Date.now() - dragStartTime < 500) {
+          if (Date.now() - dragStartTime < 250) {
             var target = resolveBasePath(event.subject.id);
             window.location.href = target;
           }
