@@ -291,7 +291,7 @@ import {
             numLinks++;
           }
         }
-        return 2 + Math.sqrt(numLinks);
+        return 10 + Math.sqrt(numLinks);
       }
 
       function nodeColor(d) {
@@ -364,6 +364,7 @@ import {
             nodeData.label.alpha = 1;
             nodeData.label.scale.set(activeScale);
           } else {
+            nodeData.label.alpha = opacityScale / 2;
             nodeData.label.scale.set(defaultScale);
           }
         }
@@ -585,7 +586,7 @@ import {
           if (x != null && y != null) {
             n.gfx.position.set(x + width / 2, y + height / 2);
             if (n.label) {
-              n.label.position.set(x + width / 2, y + height / 2);
+              n.label.position.set(x + width / 2, y + height / 2.25);
             }
           }
         }
